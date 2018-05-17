@@ -9,6 +9,18 @@ function isSameDay(one, two) {
   return one && two && one.isSame(two, 'day');
 }
 
+function isLastDayOfMonth(current) {
+  if (current) {
+    return current.clone().add(1, 'day').month() !== current.month()
+  }
+}
+
+function isFirstDayOfMonth(current) {
+  if (current) {
+    return current.clone().add(-1, 'day').month() !== current.month()
+  }
+}
+
 function beforeCurrentMonthYear(current, today) {
   if (current.year() < today.year()) {
     return 1;
@@ -123,6 +135,11 @@ const DateTBody = createReactClass({
           last = dateTable[passed - 1];
         }
         let cls = cellClass;
+        if (isLastDayOfMonth(current)){
+          cls += ' last-day-of-month '
+        } else if (isFirstDayOfMonth(current)){
+          cls += ' first-day-of-month'
+        }
         let disabled = false;
         let selected = false;
 
